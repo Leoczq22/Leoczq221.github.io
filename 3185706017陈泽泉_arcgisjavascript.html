@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>3185706017czq_text-7</title>
+    <style>
+        html,
+        body {
+            margin:0;
+            height:100%;
+            width:100%;
+            padding:0;
+        }
+           #title {
+        padding: 0;
+        margin: 5px;
+        height:100%;
+        width: 5%;
+        float:right;
+        text-align:center;
+        font-style:italic;
+        background-color:green;
+        border:thin solid black;
+      }
+ #viewDiv {
+        padding: 0;
+        margin: 10px;
+        height: 100%;
+        width: 80%;
+        border:thin solid red;
+        float :right;
+      }
+      
+  
+      #baseGallery {
+        padding: 0;
+        margin: 5px;
+        height: 100%;
+        width: 10%;
+         border:thin solid blue;
+           float:left;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <script>
+        require(["esri/Map", 
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Search",
+        "esri/widgets/ScaleBar",
+        "esri/widgets/BasemapGallery",
+        "esri/widgets/LayerList"
+        ], 
+        (Map, MapView,FeatureLayer,Legend,Search,ScaleBar,BasemapGallery,LayerList) => {
+            var flayer = new FeatureLayer({
+                // URL to the service
+                url: "http://www.arcgisonline.cn/server/rest/services/Hosted/CN_34Capital_Population20210421/FeatureServer"
+            });
+        
+        const map = new Map({
+            basemap: "topo-vector"
+            // feature:[flayer]
+        });
+        map.layers.add(flayer);
+        const view = new MapView({
+            container: "viewDiv",
+            map: map,
+            zoom: 4,
+            center: [119,20] // longitude, latitude
+        });
+        var legend = new Legend({
+            view: view,
+            layerInfos: [{
+                layer: flayer,
+                title: "Legend"
+            }]
+        });
+
+        view.ui.add(legend, "bottom-right");
+       
+       const searchWidget = new Search({
+           view: view
+       });
+
+        view.ui.add(searchWidget, {
+            position: "top-left",
+            index: 2
+        });
+        var scaleBar = new ScaleBar({
+            view: view,
+            style:"ruler",
+            unit:"metric"
+        });
+        // Add widget to the bottom left corner of the view
+        view.ui.add(scaleBar, {
+  
+            position: "bottom-left"
+        });   
+        var basemapGallery = new BasemapGallery({
+            view: view,
+            container: "baseGallery"
+        });
+        var layerList = new LayerList({
+            view: view
+        });
+        // Adds widget below other elements in the top left corner of the view
+        view.ui.add(layerList, {
+            position: "top-left"
+        });
+
+        });
+    </script>
+  </head>
+
+  <body>
+    <div id="title">
+        3186
+         706017
+         czq</div>
+     
+      <div id="viewDiv"></div>
+    
+   <div id="baseGallery"></div>  
+    
+  </body>
+</html>
